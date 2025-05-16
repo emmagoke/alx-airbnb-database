@@ -79,28 +79,28 @@ Table payment {
 }
 
 Table review {
-review_id uuid [primary key]
-property_id uuid [ref: > property.property_id]
-user_id uuid [ref: > Users.user_id]
-rating integer [not null, note: 'CHECK: rating >= 1 AND rating <= 5']
-comment text [not null]
-created_at timestamp [default: `CURRENT_TIMESTAMP`]
+    review_id uuid [primary key]
+    property_id uuid [ref: > property.property_id]
+    user_id uuid [ref: > Users.user_id]
+    rating integer [not null, note: 'CHECK: rating >= 1 AND rating <= 5']
+    comment text [not null]
+    created_at timestamp [default: `CURRENT_TIMESTAMP`]
 
-indexes {
-review_id [pk]
-}
+    indexes {
+        review_id [pk]
+    }
 }
 
 Table message {
-message_id uuid [primary key]
-sender_id uuid [ref: > Users.user_id]
-recipient_id uuid [ref: > Users.user_id]
-message_body text [not null]
-sent_at timestamp [default: `CURRENT_TIMESTAMP`]
+    message_id uuid [primary key]
+    sender_id uuid [ref: > Users.user_id]
+    recipient_id uuid [ref: > Users.user_id]
+    message_body text [not null]
+    sent_at timestamp [default: `CURRENT_TIMESTAMP`]
 
-indexes {
-message_id [pk]
-}
+    indexes {
+        message_id [pk]
+    }
 }
 
 // Ref user_property: Property.host_id > User.user_id // many-to-one
