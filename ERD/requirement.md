@@ -1,5 +1,6 @@
 # Airbnb ERD
 
+```text
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
 enum users_role {
@@ -108,3 +109,4 @@ message_id [pk]
 // Ref: users.id < follows.following_user_id
 
 // Ref: users.id < follows.followed_user_id
+```
