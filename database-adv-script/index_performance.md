@@ -47,8 +47,8 @@ ORDER BY
 
 **Without Index**
 
-![without index](before_index.png)
+![without index](before_index.jpg)
 
 **With Index**
 
-![with index](after_index.png)
+![with index](after_index.jpg)
