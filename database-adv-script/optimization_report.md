@@ -57,6 +57,8 @@ LEFT JOIN country c ON s.country_id = c.country_id
 ORDER BY b.created_at DESC;
 ```
 
+## Optimized Query
+
 ```text
 EXPLAIN ANALYZE
 SELECT
@@ -85,11 +87,9 @@ SELECT
     p.max_guests AS property_max_guests,
     p.num_bedrooms AS property_num_bedrooms,
     p.num_bathrooms AS property_num_bathrooms,
-    prop_loc.street_address AS property_street_address, -- Assuming 'location' table is joined for property address
-    --- zcd.city AS property_city,                     -- Assuming 'location' and 'zipCodeDetails' provide city
-    s.name AS property_state,                           -- Assuming 'state' table provides state name
-    c.name AS property_country,                         -- Assuming 'country' table provides country name
-
+    prop_loc.street_address AS property_street_address,
+    s.name AS property_state,
+    c.name AS property_country,
 
     -- Payment details (if any)
     pay.payment_id,
@@ -104,16 +104,32 @@ INNER JOIN
     Users u ON b.user_id = u.user_id
 INNER JOIN
     properties p ON b.property_id = p.property_id
-LEFT JOIN -- A booking might not have a payment record yet (e.g., pending or canceled without payment)
+LEFT JOIN
     payment pay ON b.booking_id = pay.booking_id
-LEFT JOIN -- To get property address details
+LEFT JOIN
     location prop_loc ON p.location_id = prop_loc.location_id
-LEFT JOIN -- To get zip code, city, and state details related to property location
+LEFT JOIN
     zipCodeDetails zcd ON prop_loc.zip_code_id = zcd.zip_code_id
-LEFT JOIN -- To get state name
+LEFT JOIN
     state s ON zcd.state_id = s.state_id
-LEFT JOIN -- To get country name
+LEFT JOIN
     country c ON s.country_id = c.country_id
+WHERE
+    -- Example WHERE clauses to make the query more specific:
+    b.status = 'confirmed'  -- Filter by booking status
+    AND u.user_id = '123e4567-e89b-12d3-a456-426614174001' -- Filter by a specific user (replace with actual UUID)
+    AND b.start_date >= '2025-01-01' -- Filter by bookings starting on or after a certain date
+    AND p.price_per_night < 300.00 -- Filter by property price
 ORDER BY
-    b.created_at DESC; -- Example: order by when the booking was created
+    b.created_at DESC;
 ```
+
+## Performance Analysis
+
+**Before**
+
+![Before Optimizing](before_opt.jpg)
+
+**After**
+
+![After Optimizing](after_opt.jpg)
