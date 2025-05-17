@@ -4,7 +4,7 @@ The query provided in performance.sql aims to retrieve a comprehensive set of de
 
 ## Initial Query (from `performance.sql`)
 
-```text
+```sql
 SELECT
     -- Booking details
     b.booking_id, b.start_date, b.end_date, b.total_price AS booking_total_price, b.num_guests AS booking_num_guests, b.status AS booking_status, b.created_at AS booking_created_at, b.updated_at AS booking_updated_at,
@@ -31,7 +31,7 @@ ORDER BY b.created_at DESC;
 
 ## Analyzing Performance with `EXPLAIN` and `EXPLAIN ANALYZE`
 
-```text
+```sql
 
 EXPLAIN ANALYZE
 SELECT
@@ -59,7 +59,7 @@ ORDER BY b.created_at DESC;
 
 ## Optimized Query
 
-```text
+```sql
 EXPLAIN ANALYZE
 SELECT
     -- Booking details
